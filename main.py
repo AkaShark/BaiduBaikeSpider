@@ -3,7 +3,7 @@ bs4 version 4.9.3
 没有做代理池 如果需要可以在manager中添加设置
 生成的Verified.csv 需要再次验证下
 """
-
+# encoding='utf-8'
 from BaiduCrawler import BaiduCrawler
 from Config import Config
 from Manager import Manager

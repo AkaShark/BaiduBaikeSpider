@@ -22,6 +22,7 @@ class AircraftAttribute(object):
         self.maximumTakeoffWeight = ""
         self.plugInCapacity = ""
         self.fuel = ""
+        self.maximumMachNumber = ""
         self.practicalLimit = ""
         self.takeOffDistance = ""
         self.landingDistance = ""
@@ -34,11 +35,15 @@ class Aircraft(object):
         self.name = ""
         self.img = ""
         self.content = ""
-        self.relation = {}
-        self.attribute = {}
+        self.relation = AircraftRelation()
+        self.attribute = AircraftAttribute()
+
+    def __doc__(self):
+        __doc__ = {
+            "relation": AircraftRelation,
+            "attribute": AircraftAttribute
+        }
 
 
-class KeyMapping(object):
 
-    def __init__(self):
-        self.map = {"": "", "": "", "": ""}
+
