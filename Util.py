@@ -29,7 +29,9 @@ class KeyMapping(object):
             "研制国家": "developedCountries",
             "装备国家": "equipmentState",
             "飞机类型": "theAircraftType",
-            "首飞时间": "theFirstFlightTime"
+            "首飞时间": "theFirstFlightTime",
+            "研发单位": "researchDevelopmentUnit",
+            "国家": "country",
         }
 
     def attrMapping(self):

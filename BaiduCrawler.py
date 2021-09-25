@@ -1,3 +1,5 @@
+# encoding='utf-8'
+
 import json
 import urllib
 from urllib.parse import urlencode
@@ -104,13 +106,39 @@ class BaiduCrawler(Crawler):
                 contentString += para.text
             aircraft.content = contentString
             # 解析 表格数据
-            self.analysisTableData("basic-info J-basic-info cmn-clearfix", soup, aircraft, False)
-            # self.analysisTableData('', soup, aircraft, True)
+            self.analysisRelTableData("basic-info J-basic-info cmn-clearfix", soup, aircraft)
+            self.analysisAttrTableData(model=aircraft, soup=soup)
             modelList.append(aircraft)
 
         self.modelToJson()
 
-    def analysisTableData(self, patten, soup, model, isAttr=False):
+    def analysisAttrTableData(self, model, soup):
+        tableSoup = soup
+        noTableSoup = soup
+        itemsDiv = tableSoup.select("table")
+        if itemsDiv is not None and len(itemsDiv) > 0:
+            for itemDiv in itemsDiv:
+                for index in range(len(itemDiv.contents)):
+                    for key in attrMapping.keys():
+                        if hasattr(itemDiv.contents[index], 'text'):
+                            if key in itemDiv.contents[index].text:
+                                value = itemDiv.contents[index].text.split(key)[1]
+                                if value is not None and len(value) > 0:
+                                    model.attribute.__setattr__(key, value)
+        else:
+            itemsDiv = noTableSoup.findAll(attrs={"class": "para", "label-module": "para"})
+            for itemDiv in itemsDiv:
+                if hasattr(itemDiv, 'text'):
+                    content = itemDiv.text
+                    if len(content) < 20:
+                        contentList = content.split(',')
+                        for content in contentList:
+                            for key in attrMapping.keys():
+                                if key in content:
+                                    value = content.split(key)[1]
+                                    model.attribute.__setattr__(key, value)
+
+    def analysisRelTableData(self, patten, soup, model):
         itemDivText = soup.find(attrs={"class": patten})
         if itemDivText is not None:
             itemDivText = itemDivText.text
@@ -140,19 +168,12 @@ class BaiduCrawler(Crawler):
 
         # mapping
         for key, value in dataDic.items():
-            if isAttr:
-                if key in attrMapping:
-                    model.attribute.__setattr__(attrMapping[key], value)
-            else:
-                if key in relMapping:
-                    model.relation.__setattr__(relMapping[key], value)
-
-
+            if key in relMapping:
+                model.relation.__setattr__(relMapping[key], value)
 
     def modelToJson(self):
-       jsonStr = json.dumps(obj=modelList,
-                  default=lambda x: x.__dict__, sort_keys=False, indent=2)
-       f = open('./dataModel.json', 'w', encoding='utf-8')
-       f.write(jsonStr)
-       f.close()
-
+        jsonStr = json.dumps(obj=modelList,
+                             default=lambda x: x.__dict__, sort_keys=False, indent=2, ensure_ascii=False)
+        f = open('./dataModel.json', 'wt', encoding='utf-8')
+        f.write(jsonStr)
+        f.close()

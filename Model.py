@@ -2,13 +2,14 @@ class AircraftRelation(object):
     def __init__(self):
         self.chineseName = ""
         self.englishName = ""
-        self.flowed = ""
+        self.followed = ""
         self.developmentTime = ""
         self.attendedTime = ""
         self.developedCountries = ""
         self.equipmentState = ""
         self.theAircraftType = ""
-        self.theFirstFlightTime = ""
+        self.researchDevelopmentUnit = ""
+        self.country = ""
 
 
 class AircraftAttribute(object):
