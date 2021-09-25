@@ -1,5 +1,6 @@
 from enum import Enum, unique, auto
 
+
 class KeyMapping(object):
     def __init__(self):
         self.attrMap = {

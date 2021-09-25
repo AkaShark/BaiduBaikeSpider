@@ -1,3 +1,8 @@
+"""
+解析数据的Model结构体
+"""
+
+
 class AircraftRelation(object):
     def __init__(self):
         self.chineseName = ""
@@ -44,7 +49,3 @@ class Aircraft(object):
             "relation": AircraftRelation,
             "attribute": AircraftAttribute
         }
-
-
-
-

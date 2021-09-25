@@ -14,6 +14,7 @@ def jsonModel(objectMap={}, listClassMap={}):
     or
     @jsonModel()
     """
+
     def decorate(cls):
         def fromJson(self, data):
             """ json key_value model"""
@@ -77,4 +78,5 @@ def jsonModel(objectMap={}, listClassMap={}):
         cls.objectArrayToJsonArray = objectArrayToJsonArray
 
         return cls
+
     return decorate

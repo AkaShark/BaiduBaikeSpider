@@ -5,15 +5,12 @@ import urllib
 from urllib.parse import urlencode
 from bs4 import BeautifulSoup
 from Crawler import Crawler
-from Json2Model import Json2ModelAPI
 from Manager import Manager
 import requests
-import pandas as pd
 from Util import CrawlerType, KeyMapping
 import pandas as pd
 import numpy as np
 from Model import Aircraft
-import jsonModel
 
 modelList = []
 attrMapping = KeyMapping().attrMapping()

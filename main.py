@@ -7,7 +7,7 @@ bs4 version 4.9.3
 from BaiduCrawler import BaiduCrawler
 from Config import Config
 from Manager import Manager
-from ReadFile import ReadFile
+from FileOperation import FileOperation
 from Util import CrawlerType
 
 if __name__ == '__main__':
@@ -23,7 +23,7 @@ if __name__ == '__main__':
     config = Config(header, cookie)
     manager.set_config(config)
     filePath = './aircraftName.csv'
-    contents = ReadFile(filePath).read()
+    contents = FileOperation(filePath).read()
     queryNames = []
     for content in contents:
         content = content.split(',')[1]
@@ -34,4 +34,3 @@ if __name__ == '__main__':
     # 百度百科爬虫
     baidu = BaiduCrawler(crawled=True, type=CrawlerType.Aircraft)
     baidu.run()
-
